@@ -16,3 +16,6 @@ youtube-downloader input_file format [Options]
 -o, --output              Name the output folder (creates it, where the program is being run)
 -t, --threads             Number of threads to run (default is 1)
 ```
+
+
+Special thanks to [Rúben Anágua](https://github.com/rubenanagua) for quickly teaching me argparse and threads in python, and for the help in the division for each thread.
