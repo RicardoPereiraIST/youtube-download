@@ -16,7 +16,7 @@ def downloadFiles(file, format, output = None, n_threads = 1):
 
 	dir_path = output
 
-	if(dir_path == None):
+	if(dir_path is None):
 		dir_path = os.path.dirname(os.path.realpath(file))
 		dir_path = os.path.join(dir_path, "youtube_dl-"+datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
 		if not os.path.exists(dir_path):
