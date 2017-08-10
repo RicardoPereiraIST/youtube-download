@@ -18,7 +18,12 @@ def downloadFiles(file, format, output = None, n_threads = 1):
 	urls = []
 	for line in lines:
 		if("list=" in line):
-			parent_url = line.split("watch?v=")[0] + "watch?v="
+			parent_url = ''
+			if("watch?v=" in line):
+				parent_url = line.split("watch?v=")[0] + "watch?v="
+			else:
+				parent_url = line.split("playlist?list=")[0] + "watch?v="
+
 			result = subprocess.check_output(["youtube-dl", "-j", "--flat-playlist", line])
 			result = result.decode('utf-8')
 			list_of_files = result.split("\n")
