@@ -7,7 +7,7 @@ It requires the Python interpreter, and it should not be platform specific.
 
 Only mp3 and mp4 formats are accepted, for now.
 ```
-youtube-downloader input_file format [Options]
+youtube-download.py input_file format [Options]
 ```
 
 # **Options**
