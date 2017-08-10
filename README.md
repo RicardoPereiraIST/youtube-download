@@ -1,7 +1,7 @@
 # youtube-download
 
 # **Description**
-Using [youtube-dl](https://github.com/rg3/youtube-dl), downloads multiple files at once.
+Using [youtube-dl](https://github.com/rg3/youtube-dl), downloads multiple files at once, with the possibility of using threads.
 It's a command-line program to download multiple videos at once, by passing it a file with urls.
 It requires the Python interpreter, and it should not be platform specific.
 
