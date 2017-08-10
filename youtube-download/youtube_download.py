@@ -6,6 +6,7 @@ from datetime import datetime
 from time import sleep
 import threading
 import math
+import subprocess
 from thread import MyThread
 import argparse
 
@@ -13,6 +14,25 @@ def downloadFiles(file, format, output = None, n_threads = 1):
 	with open(file, "r") as f:
 		lines = f.read().splitlines()
 	f.close()
+
+	urls = []
+	for line in lines:
+		if("list=" in line):
+			parent_url = line.split("watch?v=")[0] + "watch?v="
+			result = subprocess.check_output(["youtube-dl", "-j", "--flat-playlist", line])
+			result = result.decode('utf-8')
+			list_of_files = result.split("\n")
+			for _files in list_of_files:
+				_file = _files.split(',')
+				for _ids in _file:
+					if "\"url\":" in _ids:
+						url = _ids.split("\"url\": ")[1]
+						if("}" in url):
+							url = url[:-1]
+						url = url[1:-1]
+						urls.append(parent_url + url)
+		else:
+			urls.append(line)
 
 	dir_path = output
 
@@ -22,16 +42,18 @@ def downloadFiles(file, format, output = None, n_threads = 1):
 		if not os.path.exists(dir_path):
 			os.makedirs(dir_path)
 
-	if(n_threads > len(lines)):
-		n_threads = len(lines)
+	if(n_threads > len(urls)):
+		n_threads = len(urls)
+	if(n_threads < 1):
+		n_threads = 1
 
 	threads = []
 	
 	urls_per_thread = [] 
 	for i in range(0, n_threads):
-		max_elements = int(math.ceil(float(len(lines))/(n_threads - i)))
-		url_sublist = lines[:max_elements]
-		lines = lines[max_elements:]
+		max_elements = int(math.ceil(float(len(urls))/(n_threads - i)))
+		url_sublist = urls[:max_elements]
+		urls = urls[max_elements:]
 		urls_per_thread.append(url_sublist or None)
 
 	for i in range(0, n_threads):
